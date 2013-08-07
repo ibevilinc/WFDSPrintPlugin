@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+(c) Copyright 2013 Hewlett-Packard Development Company, L.P.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Plugin information -->
+    <integer name="plugin_api_version" translatable="false">1</integer>
+
+    <string name="plugin_vendor_name" translatable="false">WFDS</string>
+
+    <bool name="plugin_is_vendor_plugin" translatable="false">true</bool>
+    <bool name="plugin_is_class_plugin" translatable="false">false</bool>
+    <bool name="plugin_supports_print_to_file" translatable="false">true</bool>
+
+    <string name="plugin_discovery_methods" translatable="false">network</string>
+    <string name="plugin_wireless_direct_prefix" translatable="false">HP-Print</string>
+    <string name="plugin_wireless_direct_address" translatable="false">192.168.223.1</string>
+
+    <!-- Preference keys -->
+    <string name="preference_key__legal_information" translatable="false">preference_key__legal_information</string>
+    <string name="preference_key__application_version" translatable="false">preference_key__application_version</string>
+
+    <!-- wPrint configuration -->
+    <string name="wprint_application_id_samsung" translatable="false">wPrintSamsung</string>
+    <string name="wprint_application_id" translatable="false">wPrintAndroid</string>
+
+    <!-- Application defaults -->
+    <bool name="ipp_over_legacy_default" translatable="false">false</bool>
+
+    <!-- wPrint paper size values -->
+    <string name="wprint_paper_size_a4" translatable="false">iso_a4_210x297mm</string>
+    <string name="wprint_paper_size_letter" translatable="false">na_letter_8.5x11in</string>
+    <string name="wprint_paper_size_4x6" translatable="false">na_index-4x6_4x6in</string>
+    <string name="wprint_paper_size_10x15cm" translatable="false">om_small-photo_100x150mm</string>
+    <string name="wprint_paper_size_l" translatable="false">oe_l_3.5x5in</string>
+    <string name="wprint_paper_size_3_5x5" translatable="false">na_index-3x5_3x5in</string>
+    <string name="wprint_paper_size_5x7" translatable="false">na_5x7_5x7in</string>
+    <string name="setting__print_to_file" translatable="false">setting__print_to_file</string>
+    <string name="setting__print_to_file_filename" translatable="false">setting__print_to_file_filename</string>
+    <string name="default_print_to_file_filename" translatable="false">test.pcl</string>
+
+    <!-- Values pass to Samsung PrintService -->
+    <!-- Paper Size names -->
+    <string name="paper_size_a4">A4</string>
+    <string name="paper_size_letter">Letter</string>
+    <string name="paper_size_4x6">4x6 in</string>
+    <string name="paper_size_10x15cm">10x15 cm</string>
+    <string name="paper_size_l">L</string>
+    <string name="paper_size_3_5x5">3.5x5 in</string>
+    <string name="paper_size_5x7">5x7 in</string>
+    <!-- Paper Type names -->
+    <string name="paper_type_auto">Automatic</string>
+    <string name="paper_type_photo">Photo Glossy</string>
+
+</resources>

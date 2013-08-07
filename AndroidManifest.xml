@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+(c) Copyright 2013 Hewlett-Packard Development Company, L.P.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.android.wfds.printplugin"
+    android:versionCode="1"
+    android:versionName="1.0.0" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:name=".About"
+            android:enabled="true"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            tools:ignore="ExportedActivity" >
+            <intent-filter>
+                <action android:name="com.hp.android.printplugin.ABOUT_PLUGIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--
+        <activity
+            android:name=".Settings"
+            android:enabled="true"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            tools:ignore="ExportedActivity" >
+            <intent-filter>
+                <action android:name="com.hp.android.printplugin.PLUGIN_SETTINGS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        -->
+        <activity
+            android:name=".LegalNotice"
+            android:enabled="true"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            tools:ignore="ExportedActivity" />
+
+        <service
+            android:name="com.android.wfds.printservice.WPrintService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":wfdsprint"
+            tools:ignore="ExportedService" >
+            <intent-filter>
+                <action android:name="org.androidprinting.intent.ACTION_GET_PRINT_SERVICE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="com.hp.android.printplugin.is_vendor_plugin"
+                android:value="false" />
+            <meta-data
+                android:name="com.hp.android.printplugin.is_class_plugin"
+                android:value="true" />
+            <meta-data
+                android:name="com.hp.android.printplugin.api_version"
+                android:value="@integer/plugin_api_version" />
+            <meta-data
+                android:name="com.hp.android.printplugin.vendor_name"
+                android:value="@string/plugin_vendor_name" />
+            <meta-data
+                android:name="com.hp.android.printplugin.discovery_methods"
+                android:value="@string/plugin_discovery_methods" />
+            <meta-data
+                android:name="com.hp.android.printplugin.wireless_direct_prefix"
+                android:value="@string/plugin_wireless_direct_prefix" />
+            <meta-data
+                android:name="com.hp.android.printplugin.wireless_direct_address"
+                android:value="@string/plugin_wireless_direct_address" />
+        </service>
+    </application>
+
+</manifest>

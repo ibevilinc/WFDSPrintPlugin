@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+(c) Copyright 2013 Hewlett-Packard Development Company, L.P.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<project name="ndk_rules" default="debug">
+    <condition property="ndk.dir" value="${env.NDK_HOME}">
+        <isset property="env.NDK_HOME" />
+    </condition>
+
+    <fail
+        message="ndk.dir is missing. Update local.properties or to inject it through the NDK_HOME environment variable."
+        unless="ndk.dir"
+    />
+    
+    <!-- look for ndk jobs value in env -->
+    <condition property="ndk.jobs" value="${env.NDK_NUM_JOBS}">
+        <isset property="env.NDK_NUM_JOBS"/>
+    </condition>
+    <!-- set value to 1 if not set to anything already -->
+    <property name="ndk.jobs" value="1"/>
+
+    <target name="-pre-build">
+        <exec executable="${ndk.dir}/ndk-build" failonerror="true">
+            <arg value="-j"/>
+            <arg value="${ndk.jobs}"/>
+        </exec>
+    </target>
+
+    <target name="clean" depends="android_rules.clean">
+        <exec executable="${ndk.dir}/ndk-build" failonerror="true">
+            <arg value="clean"/>
+        </exec>
+    </target>
+
+</project>

@@ -1,0 +1,4 @@
+Scaling Images:
+  gimp orig.jpg
+  image.scale /* Note that jpeglib only supports 3200 wide images */
+  saveas
