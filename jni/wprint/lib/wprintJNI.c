@@ -870,6 +870,18 @@ static int _convertPrinterCaps_to_Java(JNIEnv *env, jobject javaPrinterCaps, con
             case INPUT_MIME_TYPE_TIFF:
                 mimetype = MIME_TYPE_TIFF;
                 break;
+            case INPUT_MIME_TYPE_GIF:
+                mimetype = MIME_TYPE_GIF;
+                break;
+            case INPUT_MIME_TYPE_BMP:
+                mimetype = MIME_TYPE_BMP;
+                break;
+            case INPUT_MIME_TYPE_HPIMAGE:
+                mimetype = MIME_TYPE_HPIMAGE;
+                break;
+            case INPUT_MIME_TYPE_IMAGE_GENERIC:
+                mimetype = MIME_TYPE_IMAGE_ALL;
+                break;
             default:
                 mimetype = "";
                 break;

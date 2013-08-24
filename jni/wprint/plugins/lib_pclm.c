@@ -197,6 +197,7 @@ static wJob_t _start_job ( wJob_t              job_handle,
 
 	job_info->pclm_page_info.pageOrigin=top_left;	// REVISIT
 
+    job_info->monochrome = (color_space == DF_COLOR_SPACE_MONO);
 	job_info->pclm_page_info.dstColorSpaceSpefication=deviceRGB;
 	if(color_space==DF_COLOR_SPACE_MONO)
 	{
@@ -350,6 +351,18 @@ static int _print_swath ( pcl_job_info_t *job_info,
 
     _PAGE_DATA(job_info, rgb_pixels, (num_rows * bytes_per_row));
 
+    if (job_info->monochrome) {
+        unsigned char *buff = (unsigned char *)rgb_pixels;
+        int nbytes = (num_rows * bytes_per_row);
+        int readIndex, writeIndex;
+        for(readIndex = writeIndex = 0; readIndex < nbytes; readIndex += BYTES_PER_PIXEL(1)) {
+            unsigned char gray = SP_GRAY(buff[readIndex + 0], buff[readIndex + 1], buff[readIndex + 2]);
+            buff[writeIndex++] = gray;
+            buff[writeIndex++] = gray;
+            buff[writeIndex++] = gray;
+        }
+    }
+
 	job_info->wprint_ifc->debug(DBG_VERBOSE,
        "lib_pclm: _print_swath(): page #%d, buffSize=%d, rows %d - %d (%d rows), bytes per row %d\n",
        	   	   	   	   job_info->page_number,
@@ -373,15 +386,18 @@ static int _print_swath ( pcl_job_info_t *job_info,
 static int _end_page ( pcl_job_info_t *job_info,
                        int            page_number )
 {
-	int outBuffSize = 0;
+    int outBuffSize = 0;
 
-	job_info->wprint_ifc->debug(DBG_LOG, "lib_pclm: _end_page()");
-	PCLmEndPage(job_info->pclmgen_obj, (void**)&job_info->pclm_output_buffer, &outBuffSize);
-	_WRITE(job_info, (const char *)job_info->pclm_output_buffer, outBuffSize);
-
+    if (page_number == -1) {
+        job_info->wprint_ifc->debug(DBG_LOG, "lib_pclm: _end_page(): writing blank page");
+        _start_page(job_info, 0.0f/*extra_margin*/, 0/*pixel_width*/, 0/*pixel_height*/);
+    }
+    job_info->wprint_ifc->debug(DBG_LOG, "lib_pclm: _end_page()");
+    PCLmEndPage(job_info->pclmgen_obj, (void**)&job_info->pclm_output_buffer, &outBuffSize);
+    _WRITE(job_info, (const char *)job_info->pclm_output_buffer, outBuffSize);
     _END_PAGE(job_info);
 
-	return(OK);
+    return(OK);
 }  /*  _end_page  */
 
 /**

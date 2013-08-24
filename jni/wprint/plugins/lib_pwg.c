@@ -52,7 +52,7 @@ cups_raster_t	*ras_out = NULL;
 cups_page_header2_t	header_pwg;		/* Page header */
 
 
-static void _write_header_pwg(int pixel_width, int pixel_height, cups_page_header2_t *h ) {
+static void _write_header_pwg(int pixel_width, int pixel_height, cups_page_header2_t *h , bool monochrome) {
 
     if (h != NULL) {
     	strcpy(h->MediaClass, "PwgRaster");
@@ -95,12 +95,12 @@ static void _write_header_pwg(int pixel_width, int pixel_height, cups_page_heade
 		h->Tumble = CUPS_TRUE;
 		h->cupsWidth = (int) pixel_width ;
 		h->cupsHeight =(int) pixel_height ;
+        h->cupsBitsPerPixel = (monochrome ? 8 : 24);
+        h->cupsBitsPerColor = 8;
+        h->cupsColorSpace = (monochrome ? CUPS_CSPACE_SW : CUPS_CSPACE_RGB);
+
 		//h->cupsMediaType = j_info->media_size;
 		//h->cupsBitsPerColor = 8; //BITS_PER_CHANNEL
-		if(header_pwg.cupsColorSpace == CUPS_CSPACE_RGB)
-			h->cupsBitsPerPixel = 3 * h->cupsBitsPerColor; //24 BITS_PER_PIXEL
-		else
-			h->cupsBitsPerPixel = h->cupsBitsPerColor; //8 BITS_PER_PIXEL
 		h->cupsBytesPerLine = (h->cupsBitsPerPixel * pixel_width + 7 ) / 8;
 		h->cupsColorOrder = CUPS_ORDER_CHUNKED;
 		h->cupsCompression = 0;
@@ -268,6 +268,7 @@ static wJob_t _start_job ( wJob_t              job_handle,
 
 	job_info->pclm_page_info.pageOrigin=top_left;	// REVISIT
 
+    job_info->monochrome = (color_space == DF_COLOR_SPACE_MONO);
 	job_info->pclm_page_info.dstColorSpaceSpefication=deviceRGB;
 	if(color_space==DF_COLOR_SPACE_MONO)
 	{
@@ -376,7 +377,7 @@ static int _start_page ( pcl_job_info_t *job_info,
     job_info->scan_line_width = BYTES_PER_PIXEL(pixel_width);
 
 	//Fill up the pwg header
-	_write_header_pwg(pixel_width, pixel_height, &header_pwg);
+	_write_header_pwg(pixel_width, pixel_height, &header_pwg, job_info->monochrome);
 
 	job_info->wprint_ifc->debug(DBG_LOG, "cupsWidth = %d", header_pwg.cupsWidth);
 	job_info->wprint_ifc->debug(DBG_LOG, "cupsHeight = %d", header_pwg.cupsHeight);
@@ -404,9 +405,22 @@ static int _print_swath ( pcl_job_info_t *job_info,
                           int            num_rows,
                           int            bytes_per_row )
 {
-	int outBuffSize = job_info->strip_height*job_info->scan_line_width;
+	int outBuffSize = num_rows;
 
     _PAGE_DATA(job_info, rgb_pixels, (num_rows * bytes_per_row));
+
+    if (job_info->monochrome) {
+        unsigned char *buff = (unsigned char *)rgb_pixels;
+        int nbytes = (num_rows * bytes_per_row);
+        int readIndex, writeIndex;
+        for(readIndex = writeIndex = 0; readIndex < nbytes; readIndex += BYTES_PER_PIXEL(1)) {
+            unsigned char gray = SP_GRAY(buff[readIndex + 0], buff[readIndex + 1], buff[readIndex + 2]);
+            buff[writeIndex++] = gray;
+        }
+        outBuffSize = writeIndex;
+    } else {
+        outBuffSize = num_rows * bytes_per_row;
+    }
 
 	job_info->wprint_ifc->debug(DBG_VERBOSE,
        "lib_pwg: _print_swath(): page #%d, buffSize=%d, rows %d - %d (%d rows), bytes per row %d\n",

@@ -151,6 +151,14 @@ unsigned long long plugin_get_mime_type_bit(const char *mime_type)
         bit = (unsigned long long)(1 << INPUT_MIME_TYPE_EXCEL);
     else if (strcmp(MIME_TYPE_PCLM, mime_type) == 0)
         bit = (unsigned long long)(1 << INPUT_MIME_TYPE_PCLM);
+    else if (strcmp(MIME_TYPE_GIF, mime_type) == 0)
+        bit = (unsigned long long)(1 << INPUT_MIME_TYPE_GIF);
+    else if (strcmp(MIME_TYPE_BMP, mime_type) == 0)
+        bit = (unsigned long long)(1 << INPUT_MIME_TYPE_BMP);
+    else if (strcmp(MIME_TYPE_HPIMAGE, mime_type) == 0)
+        bit = (unsigned long long)(1 << INPUT_MIME_TYPE_HPIMAGE);
+    else if (strcmp(MIME_TYPE_IMAGE_ALL, mime_type) == 0)
+        bit = (unsigned long long)(1 << INPUT_MIME_TYPE_IMAGE_GENERIC);
     return(bit);
 }
 

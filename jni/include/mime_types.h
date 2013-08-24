@@ -38,6 +38,7 @@ limitations under the License.
 #define MIME_TYPE_HPIMAGE "image/hpimage"
 #define MIME_TYPE_IMAGE   "image/"
 #define MIME_TYPE_PWG     "image/pwg-raster"
+#define MIME_TYPE_IMAGE_ALL "image/*"
 typedef enum
 {
     INPUT_MIME_TYPE_PPM = 0,
@@ -54,6 +55,8 @@ typedef enum
     INPUT_MIME_TYPE_TIFF,
     INPUT_MIME_TYPE_GIF,
     INPUT_MIME_TYPE_BMP,
+    INPUT_MIME_TYPE_HPIMAGE,
+    INPUT_MIME_TYPE_IMAGE_GENERIC,
 } input_mime_types_t;
 
 

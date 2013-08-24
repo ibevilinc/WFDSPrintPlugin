@@ -22,6 +22,7 @@ public class MobilePrintConstants extends com.hp.android.printplugin.support.Pri
     public static final String PRINT_SERVICE_JOB_THREAD_ID = "JobThread";
 
     public static final String MIME_TYPE__PCLM = "application/PCLm";
+    public static final String MIME_TYPE__PDF = "application/pdf";
     public static final String MIME_TYPE__PWG_RASTER = "image/pwg-raster";
 
     public static final String JOB_MARGIN_TOP = "job-margin-top";

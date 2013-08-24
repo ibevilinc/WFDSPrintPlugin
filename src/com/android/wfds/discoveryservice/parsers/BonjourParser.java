@@ -90,7 +90,7 @@ public class BonjourParser {
     }
 
     public boolean isSupportedPrinter() throws BonjourException {
-        return canPrintPCLm() || canPrintPWGRaster();
+        return canPrintPCLm() || canPrintPWGRaster() || canPrintPDF();
     }
 
     public String getPDLs() throws BonjourException {
@@ -109,6 +109,14 @@ public class BonjourParser {
         if (this.isIPPService()) {
             String pdlValue = this.getAttribute(PDL);
             return !TextUtils.isEmpty(pdlValue) && pdlValue.contains(MobilePrintConstants.MIME_TYPE__PWG_RASTER);
+        }
+        return false;
+    }
+
+    public boolean canPrintPDF() throws BonjourException {
+        if (this.isIPPService()) {
+            String pdlValue = this.getAttribute(PDL);
+            return !TextUtils.isEmpty(pdlValue) && pdlValue.contains(MobilePrintConstants.MIME_TYPE__PDF);
         }
         return false;
     }

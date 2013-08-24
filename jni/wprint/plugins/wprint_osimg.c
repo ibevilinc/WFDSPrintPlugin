@@ -41,6 +41,7 @@ static int _osimg_get_hdr( wprint_image_info_t *image_info )
         if ((result == OK) && (width > 0) && (height > 0)) {
             image_info->width  = width;
             image_info->height = height;
+            image_info->num_components = 3;
         } else {
             result = ERROR;
         }

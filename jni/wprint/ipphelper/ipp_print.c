@@ -149,10 +149,8 @@ static void _get_pclm_media_size(media_size_t media_size,
 		if (media_size == MasterMediaSizeTable2[i].media_size)
 		{
 
-			*mediaWidth = floorf(
-			_MI_TO_POINTS(MasterMediaSizeTable2[i].WidthInInches));
-			*mediaHeight = floorf(
-			_MI_TO_POINTS(MasterMediaSizeTable2[i].HeightInInches));
+			*mediaWidth = floorf((MasterMediaSizeTable2[i].WidthInInches * 2540.0f) / 1000.0f);
+			*mediaHeight = floorf(MasterMediaSizeTable2[i].HeightInInches * 2540.0f / 1000.0f);
 
 			ifprint(
 					(DBG_VERBOSE, "   _get_pclm_media_size(): match found: %d, %s\n", media_size, MasterMediaSizeTable2[i].PCL6Name));
@@ -223,7 +221,7 @@ static ipp_t* _fill_job(int ipp_op,
 		{
 			//we need to do this because VEP devices don't print pdfs when we send the other PRINT_FORMAT_PDF
 			ippAddString(request, IPP_TAG_OPERATION, IPP_TAG_MIMETYPE,
-					"document-format", NULL, PRINT_FORMAT_PCLM);
+					"document-format", NULL, (job_params->acceptsPCLm ? PRINT_FORMAT_PCLM : PRINT_FORMAT_PDF));
 			ifprint((DBG_VERBOSE, "_fill_job: setting document-format: %s", PRINT_FORMAT_PCLM));
 		}
 		//only add copies info to the job if it is a pdf as copies are included in rendered jobs
@@ -244,7 +242,7 @@ static ipp_t* _fill_job(int ipp_op,
 		{
 		case PCLm:
 			ippAddString(request, IPP_TAG_OPERATION, IPP_TAG_MIMETYPE,
-					"document-format", NULL, PRINT_FORMAT_PCLM);
+					"document-format", NULL, (job_params->acceptsPCLm ? PRINT_FORMAT_PCLM : PRINT_FORMAT_PDF));
 			ifprint((DBG_VERBOSE, "_fill_job: setting document-format: %s", PRINT_FORMAT_PCLM));
 			if (is_ePCL_ipp_capable)
 			{

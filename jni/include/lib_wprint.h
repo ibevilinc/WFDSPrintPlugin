@@ -180,6 +180,7 @@ typedef struct
    bool 				  ipp_1_0_supported;
    bool					  ipp_2_0_supported;
    bool					  ePCL_ipp_supported;
+   bool					  acceptsPCLm;
    const char             *useragent;
    char                   docCategory[10];
 

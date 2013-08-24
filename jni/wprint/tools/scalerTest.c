@@ -819,8 +819,13 @@ int main(int argc, char **argv)
                 }
                 if (monochrome) {
                     int readIndex, writeIndex;
-                    for(readIndex = writeIndex = 0; readIndex < nbytes; readIndex += BYTES_PER_PIXEL(1), writeIndex++) {
-                        buff[writeIndex] = SP_GRAY(buff[readIndex + 0], buff[readIndex + 1], buff[readIndex + 2]);
+                    for(readIndex = writeIndex = 0; readIndex < nbytes; readIndex += BYTES_PER_PIXEL(1)) {
+                        unsigned char gray = SP_GRAY(buff[readIndex + 0], buff[readIndex + 1], buff[readIndex + 2]);
+                        buff[writeIndex++] = gray;
+                        if (output_format == OUTPUT_PDF) {
+                            buff[writeIndex++] = gray;
+                            buff[writeIndex++] = gray;
+                        }
                     }
                     nbytes = writeIndex;
                 }

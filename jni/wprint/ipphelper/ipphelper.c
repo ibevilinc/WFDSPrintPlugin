@@ -1673,11 +1673,12 @@ parse_printerAttributes(ipp_t *response, printer_capabilities_t *capabilities,
   }
 
   // determine if device prints pages face-down
+  capabilities->hasFaceDownTray = 1;
   if ((attrptr = ippFindAttribute(response, "output-bin-supported", IPP_TAG_KEYWORD)) != NULL)
   {
-	  if(strstr(ippGetString(attrptr, 0, NULL), "face-down") != NULL)
+	  if(strstr(ippGetString(attrptr, 0, NULL), "face-up") != NULL)
 	  {
-		  capabilities->hasFaceDownTray = 1;
+		  capabilities->hasFaceDownTray = 0;
 	  }
   }
 

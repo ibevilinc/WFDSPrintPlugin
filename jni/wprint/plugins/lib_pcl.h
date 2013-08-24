@@ -26,6 +26,8 @@ limitations under the License.
 #define _WJOBH_MIN   1
 #define _WJOBH_MAX   65535
 
+#define SP_GRAY(Yr,Cbg,Crb) (((Yr<<6) + (Cbg*160) + (Crb<<5)) >> 8)
+
 #define _FREE(X)     { if (X) { free(X); (X) = NULL; } }
 
 #define _START_JOB(JOB_INFO,EXT) \
@@ -93,6 +95,7 @@ typedef struct
     int     page_number, num_rows;
     int     send_full_row;
     int     rows_to_skip;
+    uint8   monochrome;
 
     // 20120607 - LK - adding support for genPCLm
     int     num_components;

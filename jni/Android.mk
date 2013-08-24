@@ -34,6 +34,7 @@ PCLM_SRC_FILES := \
 	$(WPRINT_PLUGINS_DIR)/genPCLm/src/genPCLm.cpp  \
 	$(WPRINT_PLUGINS_DIR)/genPCLm/src/genJPEGStrips.cpp  \
 	$(WPRINT_PLUGINS_DIR)/plugin_pcl.c  \
+	$(WPRINT_PLUGINS_DIR)/plugin_pdf.c  \
 	$(WPRINT_PLUGINS_DIR)/pclm_wrapper_api.cpp  \
 	$(WPRINT_PLUGINS_DIR)/wprint_hpimage.c  \
 	$(WPRINT_PLUGINS_DIR)/wprint_image.c  \

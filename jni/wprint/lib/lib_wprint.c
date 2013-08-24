@@ -1527,9 +1527,11 @@ static void _setup_io_plugins()
 }
 
 extern wprint_plugin_t *libwprintplugin_pcl_reg(void);
+extern wprint_plugin_t *libwprintplugin_pdf_reg(void);
 static void _setup_print_plugins()
 {
     plugin_add(libwprintplugin_pcl_reg());
+    plugin_add(libwprintplugin_pdf_reg());
 }
 
 /*____________________________________________________________________________
@@ -1693,7 +1695,7 @@ static void _validate_print_formats(printer_capabilities_t *printer_cap)
 static void _collect_supported_input_formats(
 		printer_capabilities_t *printer_caps)
 {
-	unsigned long long input_formats;
+	unsigned long long input_formats = 0 ;
 	plugin_get_passthru_input_formats(&input_formats);
 
 	/* remove things the printer can't support */
@@ -1817,7 +1819,7 @@ static char *_get_print_format(const char *printer_addr, int port_num,
 	{
 		print_format = PRINT_FORMAT_PDF;
 	}
-	else if(cap->canPrintPCLm)
+	else if(cap->canPrintPCLm || cap->canPrintPDF) /* PCLm is a subset of PDF */
 	{
 		print_format = PRINT_FORMAT_PCLM;
 #if (USE_PWG_OVER_PCLM != 0)
@@ -1903,6 +1905,8 @@ int wprintGetFinalJobParams(const char *printer_addr, int port_num,
 	_REMAP_PORT(port_num);
 	result = OK;
 
+    job_params->acceptsPCLm = printer_cap->canPrintPCLm;
+
 	if (printer_cap->ePCL_ipp_version == 1)
 	{
 		job_params->ePCL_ipp_supported = true;
@@ -1924,7 +1928,7 @@ int wprintGetFinalJobParams(const char *printer_addr, int port_num,
 		job_params->color_space = DF_COLOR_SPACE_MONO;
 	}
 
-	if (printer_cap->canPrintPCLm)
+	if (printer_cap->canPrintPCLm || printer_cap->canPrintPDF)
 	{
 		job_params->pcl_type = PCLm;
 #if (USE_PWG_OVER_PCLM != 0)
@@ -2343,7 +2347,7 @@ wJob_t wprintStartJob(const char *printer_addr, port_t port_num,
 
 		if (strcmp(print_format, PRINT_FORMAT_PCLM) == 0)
 		{
-			if (printer_cap->canPrintPCLm)
+			if (printer_cap->canPrintPCLm || printer_cap->canPrintPDF)
 				jq->job_params.pcl_type = PCLm;
 			else
 				jq->job_params.pcl_type = PCLNONE;

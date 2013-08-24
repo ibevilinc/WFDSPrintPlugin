@@ -88,6 +88,7 @@ static const char *_mime_types[] = {
       MIME_TYPE_GIF,
       MIME_TYPE_BMP,
       MIME_TYPE_HPIMAGE,
+      MIME_TYPE_IMAGE_ALL,
       NULL };
   
 static const char *_print_formats[] = {
