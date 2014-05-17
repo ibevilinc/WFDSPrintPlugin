@@ -32,10 +32,15 @@ limitations under the License.
     <!-- Preference keys -->
     <string name="preference_key__legal_information" translatable="false">preference_key__legal_information</string>
     <string name="preference_key__application_version" translatable="false">preference_key__application_version</string>
+    <string name="preference_key__two_sided_enabled" translatable="false">preference_key__two_sided_enabled</string>
 
     <!-- wPrint configuration -->
     <string name="wprint_application_id_samsung" translatable="false">wPrintSamsung</string>
     <string name="wprint_application_id" translatable="false">wPrintAndroid</string>
+
+    <!-- defaults -->
+    <bool name="default__two_sided_enabled" translatable="false">false</bool>
+    <bool name="google_print_api_enabled" translatable="false">false</bool>
 
     <!-- Application defaults -->
     <bool name="ipp_over_legacy_default" translatable="false">false</bool>
@@ -64,5 +69,11 @@ limitations under the License.
     <!-- Paper Type names -->
     <string name="paper_type_auto">Automatic</string>
     <string name="paper_type_photo">Photo Glossy</string>
+
+    <!-- Resolutions -->
+    <item name="android_print_id__resolution_300" translatable="false" type="id"/>
+    <item name="android_print_id__resolution_600" translatable="false" type="id"/>
+
+    <string name="wprint_library_prefix" translatable="false">wfdsdev</string>
 
 </resources>

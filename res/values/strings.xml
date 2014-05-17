@@ -17,7 +17,21 @@ limitations under the License.
 <resources>
     <!-- Application information -->
     <string name="app_name">WFDS Print Service Plugin</string>
-    <!-- About acitivity -->
+    <!-- Settings activity -->
+    <string name="activity_label__settings">Settings</string>
+    <!-- About activity -->
     <string name="application_version_title">Application version</string>
     <string name="legal_information_title">Legal information</string>
+    <!-- error codes -->
+    <string name="fail_reason__could_not_start_job">Could not start job</string>
+    <string name="fail_reason__service_failed">Print service failed</string>
+    <!-- resolution names -->
+    <string name="resolution_300_dpi">300dpi</string>
+    <string name="resolution_600_dpi">600dpi</string>
+    <!-- Preferences -->
+    <string name="preference_category_title__plugin_info">Plugin information</string>
+    <string name="preference_title__two_sided_enabled">2-sided</string>
+    <string name="preference_summary__two_sided_enabled">Enable 2-sided printing for documents</string>
+    <string name="preference_title__wfds_strict_mode">Strict mode</string>
+    <string name="preference_summary__wfds_strict_mode">Run WFDS in strict mode</string>
 </resources>
